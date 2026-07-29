@@ -1,0 +1,2446 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Михаил — Частный кровельщик в&nbsp;Челябинске | Монтаж и&nbsp;ремонт кровли под&nbsp;ключ</title>
+  <meta name="description" content="Частный кровельный мастер Михаил в&nbsp;Челябинске. Более 10 лет опыта, работа без&nbsp;посредников. Монтаж металлочерепицы, профнастила, ремонт и&nbsp;утепление крыш. Бесплатный замер и&nbsp;смета. Звоните!">
+  
+  <!-- Google Fonts: Inter & Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Leaflet Interactive Map Engine -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <style>
+    /* ==========================================================================
+       1. DESIGN SYSTEM & VARIABLE DEFINITIONS
+       ========================================================================== */
+    :root {
+      /* Premium Light Theme (Default) */
+      --bg-primary: #F8FAFC;
+      --bg-secondary: #FFFFFF;
+      --bg-card: #FFFFFF;
+      --bg-elevated: #F1F5F9;
+      --bg-hero-overlay: linear-gradient(180deg, rgba(15, 23, 42, 0.75) 0%, rgba(15, 23, 42, 0.85) 100%);
+      
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --text-subtle: #94A3B8;
+      
+      --accent: #E11D48; /* Premium Roofing Terracotta/Red Accent */
+      --accent-hover: #BE123C;
+      --accent-light: rgba(225, 29, 72, 0.08);
+      --accent-glow: rgba(225, 29, 72, 0.25);
+      
+      --gold: #D97706;
+      --gold-light: rgba(217, 119, 6, 0.12);
+      
+      --success: #10B981;
+      --success-light: rgba(16, 185, 129, 0.1);
+      
+      --border-color: #E2E8F0;
+      --border-focus: #CBD5E1;
+      
+      --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+      --shadow-lg: 0 20px 35px -10px rgba(15, 23, 42, 0.14);
+      
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+      
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      --header-height: 80px;
+    }
+
+    [data-theme="dark"] {
+      /* Premium Dark Graphite Theme */
+      --bg-primary: #0B0F19;
+      --bg-secondary: #131B2E;
+      --bg-card: #1B243B;
+      --bg-elevated: #24304D;
+      --bg-hero-overlay: linear-gradient(180deg, rgba(11, 15, 25, 0.85) 0%, rgba(11, 15, 25, 0.95) 100%);
+      
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --text-subtle: #64748B;
+      
+      --accent: #F43F5E;
+      --accent-hover: #E11D48;
+      --accent-light: rgba(244, 63, 94, 0.15);
+      --accent-glow: rgba(244, 63, 94, 0.35);
+      
+      --gold: #F59E0B;
+      --gold-light: rgba(245, 158, 11, 0.15);
+      
+      --success: #34D399;
+      --success-light: rgba(52, 211, 153, 0.15);
+      
+      --border-color: #1E293B;
+      --border-focus: #334155;
+      
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 20px 35px -10px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Reset & Core Setup */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      overflow-x: hidden !important;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Winking Theme Switcher Animation */
+    @keyframes themeToggleWink {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      10% { transform: scale(1.18) rotate(-12deg); }
+      20% { transform: scale(0.92) rotate(10deg); }
+      30% { transform: scale(1.12) rotate(-6deg); }
+      40% { transform: scale(1) rotate(0deg); }
+    }
+
+    .theme-toggle {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      animation: themeToggleWink 6s infinite ease-in-out;
+      position: relative;
+    }
+
+    .theme-toggle:hover {
+      background: var(--accent-light);
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: scale(1.08);
+      animation: none;
+    }
+
+    /* ==========================================================================
+       2. HEADER & NAVIGATION
+       ========================================================================== */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--header-height);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 1000;
+      transition: var(--transition);
+    }
+
+    [data-theme="dark"] .header {
+      background: rgba(19, 27, 46, 0.88);
+    }
+
+    .header-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--accent) 0%, #9F1239 100%);
+      color: #FFF;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      line-height: 1.2;
+      color: var(--text-main);
+    }
+
+    .logo-title span {
+      color: var(--accent);
+    }
+
+    .logo-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--accent);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-phone-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .header-phone {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--text-main);
+      transition: var(--transition);
+    }
+
+    .header-phone:hover {
+      color: var(--accent);
+    }
+
+    .header-phone-sub {
+      font-size: 0.72rem;
+      color: var(--success);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--success);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      outline: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, #BE123C 100%);
+      color: #FFFFFF;
+      box-shadow: 0 6px 20px var(--accent-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2deg);
+      box-shadow: 0 10px 25px var(--accent-glow);
+      filter: brightness(1.05);
+    }
+
+    .btn-secondary {
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: var(--accent-light);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+      color: #0F172A;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2deg);
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4);
+    }
+
+    .mobile-nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       3. HERO SECTION WITH KEN BURNS FULLSCREEN SLIDER
+       ========================================================================== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      padding-top: calc(var(--header-height) + 40px);
+      padding-bottom: 60px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      color: #FFFFFF;
+    }
+
+    /* Ken Burns Zoom Background Slider */
+    .hero-slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      background-size: cover;
+      background-position: center;
+      transition: opacity 1.5s ease-in-out;
+      transform: scale(1);
+    }
+
+    .slide.active {
+      opacity: 1;
+      animation: kenBurnsZoom 8s infinite alternate ease-in-out;
+    }
+
+    @keyframes kenBurnsZoom {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.12); }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(15, 23, 42, 0.72) 60%, rgba(15, 23, 42, 0.88) 100%);
+      z-index: 2;
+    }
+
+    .hero-container {
+      position: relative;
+      z-index: 3;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #F8FAFC;
+    }
+
+    .hero-badge.rating-badge {
+      background: rgba(245, 158, 11, 0.2);
+      border-color: rgba(245, 158, 11, 0.4);
+      color: #FDE047;
+    }
+
+    .hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-title span {
+      color: #F43F5E;
+      background: linear-gradient(135deg, #FB7185 0%, #F43F5E 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: #E2E8F0;
+      margin-bottom: 32px;
+      max-width: 620px;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .hero-stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .stat-card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-number {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #FFF;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-number span {
+      color: #F43F5E;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: #CBD5E1;
+    }
+
+    /* Hero Form Card */
+    .hero-form-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      color: #0F172A;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    [data-theme="dark"] .hero-form-card {
+      background: rgba(19, 27, 46, 0.95);
+      color: #F8FAFC;
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .form-card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .form-card-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-primary);
+      color: var(--text-main);
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .form-input:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light);
+    }
+
+    .form-guarantee {
+      margin-top: 12px;
+      font-size: 0.75rem;
+      color: var(--text-subtle);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* ==========================================================================
+       4. PROMOTIONS & SOCIAL DISCOUNTS BANNER
+       ========================================================================== */
+    .section {
+      padding: 80px 0;
+    }
+
+    .promo-banner {
+      background: linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #4338CA 100%);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      color: #FFFFFF;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .promo-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(244, 63, 94, 0.3) 0%, rgba(244, 63, 94, 0) 70%);
+      border-radius: 50%;
+    }
+
+    .promo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .promo-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: #F43F5E;
+      color: #FFF;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .promo-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .promo-desc {
+      font-size: 1rem;
+      color: #E0E7FF;
+      margin-bottom: 20px;
+    }
+
+    .promo-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .promo-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+    }
+
+    .promo-icon {
+      width: 24px;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    /* ==========================================================================
+       5. INTERACTIVE QUIZ CALCULATOR
+       ========================================================================== */
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 50px;
+    }
+
+    .section-subtitle {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    .quiz-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .quiz-progress-bar {
+      height: 8px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+
+    .quiz-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent) 0%, #F43F5E 100%);
+      width: 25%;
+      transition: width 0.4s ease;
+    }
+
+    .quiz-step-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .quiz-question {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .quiz-options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .quiz-option {
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: var(--bg-primary);
+    }
+
+    .quiz-option:hover {
+      border-color: var(--accent);
+      transform: translateY(-2deg);
+    }
+
+    .quiz-option.active {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    .quiz-option-title {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .quiz-option-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .quiz-nav-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* ==========================================================================
+       6. SERVICES & PRICING
+       ========================================================================== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6deg);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent);
+    }
+
+    .service-icon {
+      width: 54px;
+      height: 54px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+
+    .service-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .service-price {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .service-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .service-features {
+      list-style: none;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .service-feature-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text-main);
+    }
+
+    .check-icon {
+      color: var(--success);
+      font-weight: bold;
+    }
+
+    /* ==========================================================================
+       7. ADVANTAGES SECTION (10 KEY POINTS)
+       ========================================================================== */
+    .advantages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .advantage-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      transition: var(--transition);
+    }
+
+    .advantage-card:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-md);
+    }
+
+    .adv-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .adv-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+
+    .adv-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       8. PORTFOLIO & FINISHED OBJECTS GALLERY
+       ========================================================================== */
+    .portfolio-filters {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .filter-btn {
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--accent);
+      color: #FFF;
+      border-color: var(--accent);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .portfolio-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-4deg);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .portfolio-img-box {
+      height: 230px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portfolio-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .portfolio-card:hover .portfolio-img {
+      transform: scale(1.08);
+    }
+
+    .portfolio-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(8px);
+      color: #FFF;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .portfolio-body {
+      padding: 24px;
+    }
+
+    .portfolio-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .portfolio-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      padding-top: 12px;
+      border-top: 1px solid var(--border-color);
+      margin-top: 12px;
+    }
+
+    /* ==========================================================================
+       9. REVIEWS SECTION (RATING 5.0)
+       ========================================================================== */
+    .reviews-header-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .rating-big-box {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .rating-number {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1;
+    }
+
+    .rating-stars {
+      color: #F59E0B;
+      font-size: 1.3rem;
+      display: flex;
+      gap: 4px;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .review-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+
+    .author-info-name {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .author-info-loc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .review-text {
+      font-size: 0.94rem;
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* ==========================================================================
+       10. FAQ ACCORDION
+       ========================================================================== */
+    .faq-list {
+      max-width: 840px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .faq-question {
+      padding: 20px 24px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .faq-icon {
+      transition: transform 0.3s ease;
+      font-size: 1.2rem;
+      color: var(--accent);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      padding: 0 24px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      padding-bottom: 20px;
+    }
+
+    .faq-item.active .faq-icon {
+      transform: rotate(180deg);
+    }
+
+    /* ==========================================================================
+       11. MAP & CONTACTS SECTION
+       ========================================================================== */
+    .contacts-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .contacts-info {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .contact-item-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .contact-icon-box {
+      width: 44px;
+      height: 44px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .contact-item-title {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .contact-item-val {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+      min-height: 420px;
+    }
+
+    /* ==========================================================================
+       12. FOOTER
+       ========================================================================== */
+    .footer {
+      background: #090D16;
+      color: #94A3B8;
+      padding: 60px 0 30px;
+      border-top: 1px solid #1E293B;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-col-title {
+      color: #F8FAFC;
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 20px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+
+    .footer-links a:hover {
+      color: #F43F5E;
+    }
+
+    .footer-bottom {
+      padding-top: 30px;
+      border-top: 1px solid #1E293B;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* ==========================================================================
+       13. FLOATING AI ASSISTANT & MOBILE STICKY BAR
+       ========================================================================== */
+    /* AI Assistant Widget */
+    .ai-widget {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 990;
+    }
+
+    .ai-widget-toggle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent) 0%, #BE123C 100%);
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px var(--accent-glow);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      transition: var(--transition);
+    }
+
+    .ai-widget-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    .ai-chat-window {
+      position: absolute;
+      bottom: 74px;
+      right: 0;
+      width: 360px;
+      height: 480px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .ai-chat-window.active {
+      display: flex;
+    }
+
+    .ai-chat-header {
+      background: var(--accent);
+      color: #FFF;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ai-chat-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .ai-chat-body {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: var(--bg-primary);
+    }
+
+    .chat-msg {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+
+    .chat-msg.bot {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+    }
+
+    .chat-msg.user {
+      background: var(--accent);
+      color: #FFF;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+    }
+
+    .ai-chat-footer {
+      padding: 12px;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Mobile Sticky Footer */
+    .mobile-sticky-bar {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 12px 16px;
+      z-index: 999;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-sticky-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      max-width: 480px;
+      width: 100%;
+      position: relative;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    /* RESPONSIVE BREAKPOINTS */
+    @media (max-width: 992px) {
+      .hero-grid, .promo-grid, .contacts-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-menu {
+        display: none;
+      }
+
+      .mobile-nav-toggle {
+        display: block;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero {
+        padding-top: calc(var(--header-height) + 20px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-sticky-bar {
+        display: block;
+      }
+
+      .ai-widget {
+        bottom: 80px;
+      }
+
+      .hero-stats-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       HEADER
+       ========================================================================== -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#" class="logo-block">
+        <div class="logo-icon">🏠</div>
+        <div class="logo-text">
+          <div class="logo-title">Михаил <span>Кровля</span></div>
+          <div class="logo-subtitle">Частный мастер • Челябинск</div>
+        </div>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="#services" class="nav-link">Услуги и&nbsp;цены</a></li>
+        <li><a href="#advantages" class="nav-link">Преимущества</a></li>
+        <li><a href="#quiz" class="nav-link">Калькулятор</a></li>
+        <li><a href="#portfolio" class="nav-link">Наши работы</a></li>
+        <li><a href="#reviews" class="nav-link">Отзывы</a></li>
+        <li><a href="#contacts" class="nav-link">Контакты</a></li>
+      </ul>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggleBtn" title="Переключить тему">🌙</button>
+
+        <div class="header-phone-block">
+          <a href="tel:+79990000000" class="header-phone">+7 (999) 000-00-00</a>
+          <div class="header-phone-sub">
+            <span class="status-dot"></span> На&nbsp;связи до&nbsp;21:00
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="openModal('Вызов на замер')">Вызвать на&nbsp;замер (0 ₽)</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       HERO SECTION WITH KEN BURNS FULLSCREEN SLIDER
+       ========================================================================== -->
+  <section class="hero">
+    <div class="hero-slider">
+      <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1628744448840-55bdb2497bd4?auto=format&fit=crop&w=1920&q=80&sig=101');"></div>
+      <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1920&q=80&sig=102');"></div>
+      <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80&sig=103');"></div>
+    </div>
+    <div class="hero-overlay"></div>
+
+    <div class="container hero-container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge-row">
+            <span class="hero-badge rating-badge">⭐ 5.0 Рейтинг (7 отзывов)</span>
+            <span class="hero-badge">🏆 10+ лет опыта</span>
+            <span class="hero-badge">🔨 Без посредников</span>
+          </div>
+
+          <h1 class="hero-title">
+            Монтаж и&nbsp;ремонт кровли <span>под&nbsp;ключ</span> в&nbsp;Челябинске
+          </h1>
+
+          <p class="hero-subtitle">
+            Частный кровельщик Михаил. Выполняю работы любой сложности для&nbsp;коттеджей, частных домов и&nbsp;дач. Замер, составление сметы и&nbsp;выезд — 0&nbsp;рублей. Фиксированная стоимость по&nbsp;договору.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#quiz" class="btn btn-gold">
+              🧮 Рассчитать стоимость кровли (1 мин)
+            </a>
+            <button class="btn btn-primary" onclick="openModal('Бесплатный выезд на замер')">
+              📏 Заказать бесплатный замер
+            </button>
+          </div>
+
+          <div class="hero-stats-row">
+            <div class="stat-card">
+              <div class="stat-number">10+ <span>лет</span></div>
+              <div class="stat-label">Опыта кровельных работ</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">120+ <span>объектов</span></div>
+              <div class="stat-label">Сдано в&nbsp;Челябинске и&nbsp;области</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">15% <span>скидка</span></div>
+              <div class="stat-label">Льготным категориям и&nbsp;СВО</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-form-card">
+          <div class="form-card-title">Получить смету и&nbsp;консультацию</div>
+          <div class="form-card-subtitle">Оставьте номер — Михаил перезвонит в&nbsp;течение 10 минут</div>
+
+          <form onsubmit="handleFormSubmit(event)">
+            <div class="form-group">
+              <label class="form-label">Ваше имя</label>
+              <input type="text" class="form-input" placeholder="Александр" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Телефон для&nbsp;связи</label>
+              <input type="tel" class="form-input" placeholder="+7 (999) 000-00-00" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Тип услуги</label>
+              <select class="form-select">
+                <option>Монтаж кровли под ключ</option>
+                <option>Ремонт и замена покрытия</option>
+                <option>Устранение протечки</option>
+                <option>Утепление кровли</option>
+                <option>Нужна консультация</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">
+              Запросить расчёт стоимости
+            </button>
+          </form>
+
+          <div class="form-guarantee">
+            🔒 Ваши данные защищены. Никакого спама.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       4. PROMOTIONS & DISCOUNTS BANNER
+       ========================================================================== -->
+  <section class="section" style="padding-top: 40px;">
+    <div class="container">
+      <div class="promo-banner">
+        <div class="promo-grid">
+          <div>
+            <span class="promo-tag">🎁 Действующая акция</span>
+            <h2 class="promo-title">Скидка 15% и&nbsp;Бесплатный замер по&nbsp;всему Челябинску</h2>
+            <p class="promo-desc">
+              Предоставляю специальную скидку 15% на&nbsp;все виды кровельных работ для&nbsp;пенсионеров, многодетных семей, инвалидов и&nbsp;семей участников СВО.
+            </p>
+            <ul class="promo-list">
+              <li class="promo-item"><span class="promo-icon">✓</span> Бесплатный выезд на&nbsp;замер и&nbsp;точный расчёт сметы</li>
+              <li class="promo-item"><span class="promo-icon">✓</span> Помощь в&nbsp;закупке качественных материалов со&nbsp;скидкой до&nbsp;20%</li>
+              <li class="promo-item"><span class="promo-icon">✓</span> Фиксация цены в&nbsp;официальном договоре</li>
+            </ul>
+          </div>
+          <div style="text-align: center;">
+            <button class="btn btn-gold" onclick="openModal('Активация скидки 15%')" style="padding: 16px 36px; font-size: 1.1rem;">
+              Получить скидку 15%
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       5. INTERACTIVE QUIZ CALCULATOR
+       ========================================================================== -->
+  <section class="section" id="quiz">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Онлайн Калькулятор</div>
+        <h2 class="section-title">Рассчитайте ориентировочную стоимость кровли</h2>
+        <p class="section-desc">Ответьте на&nbsp;4 простых вопроса и&nbsp;получите точную смету с&nbsp;учётом скидки</p>
+      </div>
+
+      <div class="quiz-card">
+        <div class="quiz-progress-bar">
+          <div class="quiz-progress-fill" id="quizProgress"></div>
+        </div>
+        <div class="quiz-step-info">
+          <span>Шаг <span id="currentStepNum">1</span> из 4</span>
+          <span id="quizStepTitle">Выбор типа объекта</span>
+        </div>
+
+        <div id="quizContent">
+          <!-- Step 1 -->
+          <div class="quiz-step" data-step="1">
+            <h3 class="quiz-question">Укажите тип вашего объекта:</h3>
+            <div class="quiz-options-grid">
+              <div class="quiz-option active" onclick="selectQuizOption(this)">
+                <div class="quiz-option-title">🏡 Частный дом / Коттедж</div>
+                <div class="quiz-option-desc">Постоянное проживание</div>
+              </div>
+              <div class="quiz-option" onclick="selectQuizOption(this)">
+                <div class="quiz-option-title">🛖 Дачный домик</div>
+                <div class="quiz-option-desc">Сезонное проживание</div>
+              </div>
+              <div class="quiz-option" onclick="selectQuizOption(this)">
+                <div class="quiz-option-title">♨️ Баня / Гараж / Пристройка</div>
+                <div class="quiz-option-desc">Небольшая площадь</div>
+              </div>
+              <div class="quiz-option" onclick="selectQuizOption(this)">
+                <div class="quiz-option-title">🏢 Коммерческое здание</div>
+                <div class="quiz-option-desc">Склад, ангар, офис</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-nav-row">
+          <button class="btn btn-secondary" id="quizPrevBtn" onclick="prevQuizStep()" style="visibility: hidden;">
+            ← Назад
+          </button>
+          <button class="btn btn-primary" id="quizNextBtn" onclick="nextQuizStep()">
+            Далее →
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       6. SERVICES & PRICING
+       ========================================================================== -->
+  <section class="section" id="services" style="background: var(--bg-elevated);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Услуги и&nbsp;цены</div>
+        <h2 class="section-title">Полный спектр кровельных работ в&nbsp;Челябинске</h2>
+        <p class="section-desc">Честные фиксированные расценки без&nbsp;скрытых платежей и&nbsp;накруток</p>
+      </div>
+
+      <div class="services-grid">
+        <!-- Service 1 -->
+        <div class="service-card">
+          <div class="service-icon">🏗️</div>
+          <h3 class="service-title">Монтаж кровли под ключ</h3>
+          <div class="service-price">от 850 ₽ / м²</div>
+          <p class="service-desc">Устройство стропильной системы, гидроизоляция, обрешетка, монтаж финишного покрытия и&nbsp;водостоков.</p>
+          <ul class="service-features">
+            <li class="service-feature-item"><span class="check-icon">✓</span> Стропила, паро- и гидроизоляция</li>
+            <li class="service-feature-item"><span class="check-icon">✓</span> Монтаж любого кровельного материала</li>
+            <li class="service-feature-item"><span class="check-icon">✓</span> Гарантия 10 лет по договору</li>
+          </ul>
+          <button class="btn btn-secondary" onclick="openModal('Заказ: Монтаж кровли под ключ')">Заказать монтаж</button>
+        </div>
+
+        <!-- Service 2 -->
+        <div class="service-card">
+          <div class="service-icon">🛠️</div>
+          <h3 class="service-title">Ремонт и замена кровли</h3>
+          <div class="service-price">от 450 ₽ / м²</div>
+          <p class="service-desc">Демонтаж старого шифера или профнастила, устранение дефектов стропил, укладка нового материала.</p>
+          <ul class="service-features">
+            <li class="service-feature-item"><span class="check-icon">✓</span> Аккуратный демонтаж покрытия</li>
+            <li class="service-feature-item"><span class="check-icon">✓</span> Замена поврежденных элементов</li>
+            <li class="service-feature-item"><span class="check-icon">✓</span> Вывоз строительного мусора</li>
+          </ul>
+          <button class="btn btn-secondary" onclick="openModal('Заказ: Ремонт и замена кровли')">Заказать ремонт</button>
+        </div>
+
+        <!-- Service 3 -->
+        <div class="service-card">
+          <div class="service-icon">🪛</div>
+          <h3 class="service-title">Монтаж металлочерепицы</h3>
+          <div class="service-price">от 380 ₽ / м²</div>
+          <p class="service-desc">Профессиональная укладка металлочерепицы с&nbsp;соблюдением технологии шага обрешетки и&nbsp;защиты от&nbsp;коррозии.</p>
+          <ul class="service-features">
+            <li class="service-feature-item"><span class="check-icon">✓</span> Точный раскрой без деформации</li>
+            <li class="service-feature-item"><span class="check-icon">✓</span> Установка коньков и ендов</li>
+            <li class="service-feature-item"><span class="check-icon">✓</span> Надежное крепежное соединение</li>
+          </ul>
+          <button class="btn btn-secondary" onclick="openModal('Заказ: Монтаж металлочерепицы')">Рассчитать стоимость</button>
+        </div>
+
+        <!-- Service 4 -->
+        <div class="service-card">
+          <div class="service-icon">📊</div>
+          <h3 class="service-title">Монтаж профнастила</h3>
+          <div class="service-price">от 320 ₽ / м²</div>
+          <p class="service-desc">Быстрый и&nbsp;надёжный монтаж кровельного профнастила для&nbsp;домов, гаражей и&nbsp;промышленных построек.</p>
+          <ul class="service-features">
+            <li class="service-feature-item"><span class="check-icon">✓</span> Высокая скорость монтажа</li>
+            <li class="service-feature-item"><span class="check-icon">✓</span> Герметизация стыков и саморезов</li>
+            <li class="service-feature-item"><span class="check-icon">✓</span> Долговечная защита от протечек</li>
+          </ul>
+          <button class="btn btn-secondary" onclick="openModal('Заказ: Монтаж профнастила')">Рассчитать стоимость</button>
+        </div>
+
+        <!-- Service 5 -->
+        <div class="service-card">
+          <div class="service-icon">💧</div>
+          <h3 class="service-title">Устранение протечек</h3>
+          <div class="service-price">от 2 500 ₽</div>
+          <p class="service-desc">Срочный выезд по&nbsp;Челябинску для&nbsp;поиска и&nbsp;ликвидации протечек любой сложности в&nbsp;день обращения.</p>
+          <ul class="service-features">
+            <li class="service-feature-item"><span class="check-icon">✓</span> Оперативный выезд мастера</li>
+            <li class="service-feature-item"><span class="check-icon">✓</span> Локальный ремонт примыканий</li>
+            <li class="service-feature-item"><span class="check-icon">✓</span> Замена уплотнителей и коньков</li>
+          </ul>
+          <button class="btn btn-secondary" onclick="openModal('Заказ: Устранение протечек')">Вызвать мастера</button>
+        </div>
+
+        <!-- Service 6 -->
+        <div class="service-card">
+          <div class="service-icon">❄️</div>
+          <h3 class="service-title">Утепление крыши</h3>
+          <div class="service-price">от 300 ₽ / м²</div>
+          <p class="service-desc">Монтаж базальтовой или&nbsp;минеральной ваты, паро- и&nbsp;ветрозащитных мембран для&nbsp;тёплой мансарды.</p>
+          <ul class="service-features">
+            <li class="service-feature-item"><span class="check-icon">✓</span> Без мостиков холода</li>
+            <li class="service-feature-item"><span class="check-icon">✓</span> Защита от конденсата</li>
+            <li class="service-feature-item"><span class="check-icon">✓</span> Экономия на отоплении до 35%</li>
+          </ul>
+          <button class="btn btn-secondary" onclick="openModal('Заказ: Утепление крыши')">Заказать утепление</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       WHY CHOOSE MIKHAIL (10 ADVANTAGES)
+       ========================================================================== -->
+  <section class="section" id="advantages">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Почему именно я</div>
+        <h2 class="section-title">10 реальных преимуществ работы с&nbsp;частным мастером</h2>
+        <p class="section-desc">Без наценок посредников, сделку заключаем напрямую с&nbsp;исполнителем</p>
+      </div>
+
+      <div class="advantages-grid">
+        <div class="advantage-card">
+          <div class="adv-num">01</div>
+          <h3 class="adv-title">Опыт более 10 лет</h3>
+          <p class="adv-desc">Лично выполнил более 120 кровель различной сложности по&nbsp;Челябинску и&nbsp;области.</p>
+        </div>
+        <div class="advantage-card">
+          <div class="adv-num">02</div>
+          <h3 class="adv-title">Частный мастер</h3>
+          <p class="adv-desc">Вы не переплачиваете менеджерам, офисам и&nbsp;прорабам строительных компаний.</p>
+        </div>
+        <div class="advantage-card">
+          <div class="adv-num">03</div>
+          <h3 class="adv-title">Бесплатный замер</h3>
+          <p class="adv-desc">Выезжаю на&nbsp;объект, делаю замеры и&nbsp;составляю подробную смету совершенно бесплатно.</p>
+        </div>
+        <div class="advantage-card">
+          <div class="adv-num">04</div>
+          <h3 class="adv-title">Официальный договор</h3>
+          <p class="adv-desc">Фиксируем все этапы, материалы, сроки и&nbsp;стоимость в&nbsp;договоре.</p>
+        </div>
+        <div class="advantage-card">
+          <div class="adv-num">05</div>
+          <h3 class="adv-title">Гарантия на работы</h3>
+          <p class="adv-desc">Предоставляю юридическую гарантию на&nbsp;выполненный монтаж по&nbsp;договору.</p>
+        </div>
+        <div class="advantage-card">
+          <div class="adv-num">06</div>
+          <h3 class="adv-title">Закупка материалов</h3>
+          <p class="adv-desc">Помогаю приобрести металлочерепицу и&nbsp;доборные элементы со&nbsp;скидками производителей.</p>
+        </div>
+        <div class="advantage-card">
+          <div class="adv-num">07</div>
+          <h3 class="adv-title">Фиксированная смета</h3>
+          <p class="adv-desc">Цена не увеличивается в&nbsp;процессе работ. Никаких неожиданных доплат.</p>
+        </div>
+        <div class="advantage-card">
+          <div class="adv-num">08</div>
+          <h3 class="adv-title">Соблюдение сроков</h3>
+          <p class="adv-desc">Строго соблюдаю график. Средний срок монтажа крыши частного дома — от&nbsp;3 до&nbsp;7 дней.</p>
+        </div>
+        <div class="advantage-card">
+          <div class="adv-num">09</div>
+          <h3 class="adv-title">Чистота после работ</h3>
+          <p class="adv-desc">Убираем весь строительный мусор и&nbsp;остатки материалов после завершения монтажа.</p>
+        </div>
+        <div class="advantage-card">
+          <div class="adv-num">10</div>
+          <h3 class="adv-title">Весь Челябинск и область</h3>
+          <p class="adv-desc">Выезжаю в&nbsp;любой район города и&nbsp;пригородные посёлки (Сосновский р-н, Копейск и др.).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       PORTFOLIO GALLERY
+       ========================================================================== -->
+  <section class="section" id="portfolio" style="background: var(--bg-elevated);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Портфолио</div>
+        <h2 class="section-title">Примеры выполненных объектов в&nbsp;Челябинске</h2>
+        <p class="section-desc">Реальные снимки готовых крыш и&nbsp;процесса монтажа</p>
+      </div>
+
+      <div class="portfolio-filters">
+        <button class="filter-btn active" onclick="filterPortfolio('all')">Все объекты</button>
+        <button class="filter-btn" onclick="filterPortfolio('metal')">Металлочерепица</button>
+        <button class="filter-btn" onclick="filterPortfolio('prof')">Профнастил</button>
+        <button class="filter-btn" onclick="filterPortfolio('repair')">Ремонт кровли</button>
+      </div>
+
+      <div class="portfolio-grid">
+        <!-- Object 1 -->
+        <div class="portfolio-card" data-cat="metal">
+          <div class="portfolio-img-box">
+            <img src="https://images.unsplash.com/photo-1628744448840-55bdb2497bd4?auto=format&fit=crop&w=800&q=80&sig=201" alt="Кровля из металлочерепицы" class="portfolio-img">
+            <span class="portfolio-tag">Металлочерепица</span>
+          </div>
+          <div class="portfolio-body">
+            <h3 class="portfolio-title">Коттедж в п. Залесье (Челябинск)</h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted);">Полный монтаж двускатной крыши под ключ с утеплением 200мм и водостоками.</p>
+            <div class="portfolio-meta">
+              <span>Площадь: 210 м²</span>
+              <span>Срок: 5 дней</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Object 2 -->
+        <div class="portfolio-card" data-cat="prof">
+          <div class="portfolio-img-box">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80&sig=202" alt="Монтаж профнастила" class="portfolio-img">
+            <span class="portfolio-tag">Профнастил</span>
+          </div>
+          <div class="portfolio-body">
+            <h3 class="portfolio-title">Частный дом в п. Сосновка</h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted);">Монтаж кровельного профнастила С-21 с подшивкой карнизов софитами.</p>
+            <div class="portfolio-meta">
+              <span>Площадь: 160 м²</span>
+              <span>Срок: 4 дня</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Object 3 -->
+        <div class="portfolio-card" data-cat="repair">
+          <div class="portfolio-img-box">
+            <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80&sig=203" alt="Капитальный ремонт кровли" class="portfolio-img">
+            <span class="portfolio-tag">Ремонт кровли</span>
+          </div>
+          <div class="portfolio-body">
+            <h3 class="portfolio-title">Замена покрытия в г. Копейск</h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted);">Демонтаж старого шифера, усиление стропил и укладка нового еврошифера.</p>
+            <div class="portfolio-meta">
+              <span>Площадь: 140 м²</span>
+              <span>Срок: 3 дня</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       REVIEWS (RATING 5.0)
+       ========================================================================== -->
+  <section class="section" id="reviews">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Отзывы заказчиков</div>
+        <h2 class="section-title">Что говорят о&nbsp;моей работе клиенты</h2>
+        <p class="section-desc">Оценка 5.0 на&nbsp;основе реальных отзывов жителей Челябинска</p>
+      </div>
+
+      <div class="reviews-header-card">
+        <div class="rating-big-box">
+          <div class="rating-number">5.0</div>
+          <div>
+            <div class="rating-stars">★★★★★</div>
+            <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">На основе 7 проверенных отзывов</div>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="openModal('Оставить отзыв')">Оставить отзыв</button>
+      </div>
+
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-author">
+            <div class="author-avatar">ВК</div>
+            <div>
+              <div class="author-info-name">Виктор Ковалёв</div>
+              <div class="author-info-loc">Челябинск, п. Кременкуль</div>
+            </div>
+          </div>
+          <div class="review-text">
+            «Заказывал у Михаила перекрытие крыши металлочерепицей. Приехал на замер в тот же день, привёз образцы материалов. Смету составил четкую, цена не изменилась ни на рубль! Сделали за 4 дня, за собой всё убрали. Отличный частный мастер!»
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-author">
+            <div class="author-avatar">ОН</div>
+            <div>
+              <div class="author-info-name">Ольга Николаевна</div>
+              <div class="author-info-loc">Челябинск, Ленинский район</div>
+            </div>
+          </div>
+          <div class="review-text">
+            «Спасибо Михаилу за человеческое отношение и скидку 15% как пенсионерам! Потек конёк во время дождей, Михаил приехал быстро, убрал протечку и подремонтировал примыкания. Очень благодарна!»
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-author">
+            <div class="author-avatar">СА</div>
+            <div>
+              <div class="author-info-name">Сергей Андреев</div>
+              <div class="author-info-loc">Челябинск, п. Залесье</div>
+            </div>
+          </div>
+          <div class="review-text">
+            «Делали кровлю под ключ в новом доме. Михаил сам организовал доставку леса и металлочерепицы по оптовым ценам. Качество стропилки и укладки безупречное. Настоятельно рекомендую!»
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FAQ ACCORDION
+       ========================================================================== -->
+  <section class="section" style="background: var(--bg-elevated);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Вопросы и&nbsp;ответы</div>
+        <h2 class="section-title">Часто задаваемые вопросы</h2>
+        <p class="section-desc">Всё, что важно знать перед&nbsp;началом кровельных работ</p>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item active">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>Как происходит закупка кровельных материалов?</span>
+            <span class="faq-icon">▼</span>
+          </div>
+          <div class="faq-answer">
+            Вы можете закупить материалы самостоятельно по моей подробной спецификации или доверить закупку мне. У меня есть персональные скидки от дилеров металлочерепицы и пиломатериалов в Челябинске (до 20%), все чеки предоставляю.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>Выезжаете ли вы за пределы Челябинска?</span>
+            <span class="faq-icon">▼</span>
+          </div>
+          <div class="faq-answer">
+            Да, выезжаю по всей Челябинской области в радиусе до 80 км от города (Копейск, Сосновский район, Кременкуль, Залесье, Коркино, Еманжелинск и др.).
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>Входит ли уборка мусора в стоимость?</span>
+            <span class="faq-icon">▼</span>
+          </div>
+          <div class="faq-answer">
+            Да, после завершения монтажа или демонтажных работ мы обязательно собираем весь строительный мусор, обрезки и крепеж в мешки и подготавливаем к вывозу.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>Какая предоставляется гарантия?</span>
+            <span class="faq-icon">▼</span>
+          </div>
+          <div class="faq-answer">
+            На все виды монтажных работ предоставляется официальная гарантия по договору сроком до 10 лет. В случае возникновения вопросов я выезжаю и устраняю их бесплатно.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       MAP & CONTACTS
+       ========================================================================== -->
+  <section class="section" id="contacts">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">Контакты</div>
+        <h2 class="section-title">Зона выезда и&nbsp;связь с&nbsp;мастером</h2>
+        <p class="section-desc">Выезд на&nbsp;замер по&nbsp;Челябинску и&nbsp;области — 0 рублей</p>
+      </div>
+
+      <div class="contacts-wrapper">
+        <div class="contacts-info">
+          <div class="contact-item-row">
+            <div class="contact-icon-box">📞</div>
+            <div>
+              <div class="contact-item-title">Телефон для связи</div>
+              <a href="tel:+79990000000" class="contact-item-val">+7 (999) 000-00-00</a>
+            </div>
+          </div>
+
+          <div class="contact-item-row">
+            <div class="contact-icon-box">💬</div>
+            <div>
+              <div class="contact-item-title">Мессенджеры</div>
+              <div class="contact-item-val" style="display: flex; gap: 12px; margin-top: 4px;">
+                <a href="#" style="color: #22C55E; font-weight: 700;">WhatsApp</a> • 
+                <a href="#" style="color: #3B82F6; font-weight: 700;">Telegram</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-item-row">
+            <div class="contact-icon-box">📍</div>
+            <div>
+              <div class="contact-item-title">География работы</div>
+              <div class="contact-item-val">г.&nbsp;Челябинск и&nbsp;пригородные посёлки</div>
+            </div>
+          </div>
+
+          <div class="contact-item-row">
+            <div class="contact-icon-box">⏰</div>
+            <div>
+              <div class="contact-item-title">Режим работы</div>
+              <div class="contact-item-val">Пн - Вс: 08:00 - 21:00 (без выходных)</div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" onclick="openModal('Вызов на замер')" style="margin-top: 10px;">
+            Вызвать мастера на замер (0 ₽)
+          </button>
+        </div>
+
+        <div id="map"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="logo-title" style="color: #FFF; margin-bottom: 12px;">Михаил <span>Кровля</span></div>
+          <p style="font-size: 0.88rem; line-height: 1.6; margin-bottom: 16px;">
+            Профессиональный частный кровельщик в&nbsp;Челябинске. Монтаж, ремонт и&nbsp;утепление крыш с&nbsp;гарантией по&nbsp;договору.
+          </p>
+          <div style="font-size: 0.85rem; color: #F59E0B;">⭐ Рейтинг 5.0 (7 отзывов на Авито)</div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Услуги</div>
+          <ul class="footer-links">
+            <li><a href="#services">Монтаж кровли</a></li>
+            <li><a href="#services">Ремонт крыши</a></li>
+            <li><a href="#services">Металлочерепица</a></li>
+            <li><a href="#services">Профнастил</a></li>
+            <li><a href="#services">Устранение протечек</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Навигация</div>
+          <ul class="footer-links">
+            <li><a href="#advantages">Преимущества</a></li>
+            <li><a href="#quiz">Калькулятор</a></li>
+            <li><a href="#portfolio">Портфолио</a></li>
+            <li><a href="#reviews">Отзывы</a></li>
+            <li><a href="#contacts">Контакты</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Контакты</div>
+          <p style="font-size: 0.9rem; margin-bottom: 8px;">Телефон: +7 (999) 000-00-00</p>
+          <p style="font-size: 0.9rem; margin-bottom: 16px;">Город: Челябинск</p>
+          <button class="btn btn-gold" onclick="openModal('Заказать звонок')" style="width: 100%;">
+            Заказать обратный звонок
+          </button>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 Михаил — Частный кровельщик. Все права защищены.</div>
+        <div>Челябинск и Челябинская область</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       FLOATING AI ASSISTANT & MOBILE STICKY BAR
+       ========================================================================== -->
+  <!-- AI Assistant Floating Widget -->
+  <div class="ai-widget">
+    <div class="ai-widget-toggle" onclick="toggleAiChat()" title="Помощник кровельщика">🤖</div>
+    <div class="ai-chat-window" id="aiChatWindow">
+      <div class="ai-chat-header">
+        <div class="ai-chat-title">🤖 ИИ-Консультант Михаила</div>
+        <button onclick="toggleAiChat()" style="background:none; border:none; color:#FFF; cursor:pointer;">✕</button>
+      </div>
+      <div class="ai-chat-body" id="aiChatBody">
+        <div class="chat-msg bot">
+          Здравствуйте! Я виртуальный помощник мастера Михаила. Задайте любой вопрос по монтажу кровли, выбору материалов или расчёту стоимости!
+        </div>
+      </div>
+      <div class="ai-chat-footer">
+        <input type="text" id="aiInput" class="form-input" placeholder="Напишите вопрос..." onkeypress="handleAiKeyPress(event)">
+        <button class="btn btn-primary" onclick="sendAiMessage()">→</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Sticky Bar (<768px) -->
+  <div class="mobile-sticky-bar">
+    <div class="mobile-sticky-inner">
+      <a href="tel:+79990000000" class="btn btn-primary" style="padding: 10px;">
+        📞 Позвонить
+      </a>
+      <button class="btn btn-gold" onclick="openModal('Вызов на замер')" style="padding: 10px;">
+        📏 Вызвать замерщика
+      </button>
+    </div>
+  </div>
+
+  <!-- Callback / Request Modal -->
+  <div class="modal-overlay" id="mainModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h3 class="form-card-title" id="modalTitle">Заказать замер (0 ₽)</h3>
+      <p class="form-card-subtitle">Оставьте ваши контакты, и Михаил перезвонит в течение 10 минут</p>
+
+      <form onsubmit="handleFormSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Ваше имя</label>
+          <input type="text" class="form-input" placeholder="Иван" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Телефон для связи</label>
+          <input type="tel" class="form-input" placeholder="+7 (999) 000-00-00" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
+          Отправить заявку
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       JAVASCRIPT LOGIC
+       ========================================================================== -->
+  <script>
+    /* 1. Theme Engine & LocalStorage */
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('krovlya_theme', theme);
+      themeToggleBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+
+    const savedTheme = localStorage.getItem('krovlya_theme') || 'light';
+    setTheme(savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
+
+    /* 2. Hero Background Ken Burns Slider */
+    const slides = document.querySelectorAll('.hero-slider .slide');
+    let currentSlide = 0;
+
+    setInterval(() => {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }, 6000);
+
+    /* 3. Interactive Quiz Logic */
+    let currentQuizStep = 1;
+    const totalQuizSteps = 4;
+    const stepTitles = [
+      "Выбор типа объекта",
+      "Вид кровельных работ",
+      "Кровельный материал",
+      "Ориентировочная площадь"
+    ];
+
+    const quizStepData = {
+      1: {
+        question: "Укажите тип вашего объекта:",
+        options: [
+          { title: "🏡 Частный дом / Коттедж", desc: "Постоянное проживание" },
+          { title: "🛖 Дачный домик", desc: "Сезонное проживание" },
+          { title: "♨️ Баня / Гараж", desc: "Небольшая площадь" },
+          { title: "🏢 Коммерческое здание", desc: "Склад или ангар" }
+        ]
+      },
+      2: {
+        question: "Какая услуга вам требуется?",
+        options: [
+          { title: "🏗️ Монтаж кровли под ключ", desc: "Со стропильной системой" },
+          { title: "🛠️ Капитальный ремонт", desc: "Замена старого покрытия" },
+          { title: "💧 Устранение протечек", desc: "Срочный ремонт" },
+          { title: "❄️ Утепление крыши", desc: "Монтаж теплоизоляции" }
+        ]
+      },
+      3: {
+        question: "Предпочитаемый кровельный материал:",
+        options: [
+          { title: "🧱 Металлочерепица", desc: "Надёжно и долговечно" },
+          { title: "📊 Профнастил", desc: "Экономично и практично" },
+          { title: "🍃 Еврошифер / Ондулин", desc: "Тихо во время дождя" },
+          { title: "❓ Нужна консультация", desc: "Поможем выбрать" }
+        ]
+      },
+      4: {
+        question: "Ориентировочная площадь крыши:",
+        options: [
+          { title: "до 100 м²", desc: "Дача или баня" },
+          { title: "100 - 200 м²", desc: "Стандартный дом" },
+          { title: "200 - 350 м²", desc: "Большой коттедж" },
+          { title: "более 350 м²", desc: "Коммерческий объект" }
+        ]
+      }
+    };
+
+    function renderQuizStep(step) {
+      const data = quizStepData[step];
+      document.getElementById('currentStepNum').textContent = step;
+      document.getElementById('quizStepTitle').textContent = stepTitles[step - 1];
+      document.getElementById('quizProgress').style.width = `${(step / totalQuizSteps) * 100}%`;
+
+      let optionsHtml = '';
+      data.options.forEach((opt, idx) => {
+        optionsHtml += `
+          <div class="quiz-option ${idx === 0 ? 'active' : ''}" onclick="selectQuizOption(this)">
+            <div class="quiz-option-title">${opt.title}</div>
+            <div class="quiz-option-desc">${opt.desc}</div>
+          </div>
+        `;
+      });
+
+      document.getElementById('quizContent').innerHTML = `
+        <div class="quiz-step">
+          <h3 class="quiz-question">${data.question}</h3>
+          <div class="quiz-options-grid">${optionsHtml}</div>
+        </div>
+      `;
+
+      document.getElementById('quizPrevBtn').style.visibility = step > 1 ? 'visible' : 'hidden';
+      document.getElementById('quizNextBtn').textContent = step === totalQuizSteps ? 'Получить расчёт сметы' : 'Далее →';
+    }
+
+    function selectQuizOption(el) {
+      const options = el.parentElement.querySelectorAll('.quiz-option');
+      options.forEach(o => o.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function nextQuizStep() {
+      if (currentQuizStep < totalQuizSteps) {
+        currentQuizStep++;
+        renderQuizStep(currentQuizStep);
+      } else {
+        openModal('Результат квиз-расчёта');
+      }
+    }
+
+    function prevQuizStep() {
+      if (currentQuizStep > 1) {
+        currentQuizStep--;
+        renderQuizStep(currentQuizStep);
+      }
+    }
+
+    /* 4. Portfolio Filter */
+    function filterPortfolio(category) {
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const cards = document.querySelectorAll('.portfolio-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-cat') === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    /* 5. FAQ Accordion */
+    function toggleFaq(el) {
+      const item = el.parentElement;
+      item.classList.toggle('active');
+    }
+
+    /* 6. Interactive Leaflet Map (Chelyabinsk) */
+    document.addEventListener('DOMContentLoaded', () => {
+      const map = L.map('map').setView([55.1644, 61.4368], 11);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+
+      const customIcon = L.divIcon({
+        className: 'custom-map-pin',
+        html: `<div style="background:#E11D48; color:#FFF; padding:8px 12px; border-radius:20px; font-weight:bold; box-shadow:0 4px 10px rgba(0,0,0,0.3); font-size:12px;">🏠 Михаил Кровля</div>`,
+        iconSize: [120, 40]
+      });
+
+      L.marker([55.1644, 61.4368], { icon: customIcon }).addTo(map)
+        .bindPopup('<b>Михаил — Частный кровельщик</b><br>Челябинск и пригородные посёлки.<br>Выезд на замер — 0 руб.')
+        .openPopup();
+
+      L.circle([55.1644, 61.4368], {
+        color: '#E11D48',
+        fillColor: '#E11D48',
+        fillOpacity: 0.1,
+        radius: 25000
+      }).addTo(map);
+    });
+
+    /* 7. Modal Handlers */
+    function openModal(title) {
+      document.getElementById('modalTitle').textContent = title || 'Заказать замер';
+      document.getElementById('mainModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('mainModal').classList.remove('active');
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      alert('Спасибо за заявку! Михаил перезвонит вам в течение 10 минут.');
+      closeModal();
+    }
+
+    /* 8. AI Assistant Widget Logic */
+    function toggleAiChat() {
+      const windowEl = document.getElementById('aiChatWindow');
+      windowEl.classList.toggle('active');
+    }
+
+    function handleAiKeyPress(e) {
+      if (e.key === 'Enter') sendAiMessage();
+    }
+
+    function sendAiMessage() {
+      const input = document.getElementById('aiInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const chatBody = document.getElementById('aiChatBody');
+
+      // User Message
+      const userDiv = document.createElement('div');
+      userDiv.className = 'chat-msg user';
+      userDiv.textContent = text;
+      chatBody.appendChild(userDiv);
+
+      input.value = '';
+      chatBody.scrollTop = chatBody.scrollHeight;
+
+      // Bot Answer Simulation
+      setTimeout(() => {
+        const botDiv = document.createElement('div');
+        botDiv.className = 'chat-msg bot';
+
+        let reply = "Михаил выполняет данный вид работ с гарантией по договору! Оставьте телефон в форме, и он лично проконсультирует вас.";
+        const lower = text.toLowerCase();
+        if (lower.includes('цена') || lower.includes('стоим')) {
+          reply = "Стоимость монтажа начинается от 850 руб/м², ремонт от 450 руб/м². Замер и точный расчёт сметы — бесплатно!";
+        } else if (lower.includes('скидк') || lower.includes('акци')) {
+          reply = "Для пенсионеров, многодетных семей и семей участников СВО действует льготная скидка 15%!";
+        } else if (lower.includes('черепиц') || lower.includes('проф')) {
+          reply = "Михаил работает с металлочерепицей, профнастилом, еврошифером и мягкой кровлей. Закупка со скидками до 20%.";
+        }
+
+        botDiv.textContent = reply;
+        chatBody.appendChild(botDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }, 600);
+    }
+  </script>
+</body>
+</html>
